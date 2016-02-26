@@ -1,5 +1,5 @@
-#include "Obstacle.h"
-#include "Car.h"
+#include "../hdr/Obstacle.h"
+#include "../hdr/Player.h"
 
 
 

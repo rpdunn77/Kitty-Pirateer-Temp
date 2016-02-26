@@ -4,7 +4,7 @@
  * ./a.out sounds/AHH.WAV
  *************************************************************/
 
-#include "Jukebox.h"
+#include "../hdr/Jukebox.h"
 #include <cstdio>
 
 #include <stdlib.h>

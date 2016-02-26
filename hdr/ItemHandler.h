@@ -2,6 +2,29 @@
 //********** Title: ItemHandler.h **********//
 //********** Author: Robert Dunn  **********//
 //********** Purpose:             **********//
+//**********List of Items and ID's**********//
+//**********                      **********//
+//**********Item ID:              **********//
+//**********   0: sword           **********//
+//**********   1:                 **********//
+//**********   2:                 **********//
+//**********   3:                 **********//
+//**********   4:                 **********//
+//**********   5:                 **********//
+//**********   6:                 **********//
+//**********   7:                 **********//
+//**********   8:                 **********//
+//**********   9:                 **********//
+//**********   10:lemon           **********//
+//**********   11:health          **********//
+//**********   12:                **********//
+//**********   13:                **********//
+//**********   14:                **********//
+//**********   15:                **********//
+//**********   16:                **********//
+///**********  17:                **********//
+//**********   18:                **********//
+//**********   19:                **********//
 //******************************************//
 
 
@@ -14,35 +37,11 @@
 #include "GameObject.h"
 #include "Weapon.h"
 
-//********List of Items and ID's********//
 /*
-Item ID:
-   0: sword
-   1:
-   2:
-   3:
-   4:
-   5:
-   6:
-   7:
-   8:
-   9:
-   10:lemon
-   11:health
-   12:
-   13:
-   14:
-   15:
-   16:
-   17:
-   18:
-   19:
+#include "../hdr/Items.h"
+#include "../hdr/GameObject.h"
+#include "../hdr/Weapon.h"
 */
-//**************************************//
-
-
-
-
 class ItemHandler {
    public:
       static ItemHandler& getInstance()
@@ -57,7 +56,7 @@ class ItemHandler {
          m_currItem = 0;
          m_lastWeapon = 0;
          m_lastItem = 0;
-         m_numOfItems = 0;
+         m_numOfItems = 3;
          //start with a sword and 1 lemon
          m_weaponInv[0] = new Weapon(10,3,0,0,"Sword", 0,true,-1,-1,-1);
          m_itemInv[0] = new Items(0,0,10, "Lemon",true,-1,-1,-1);
@@ -70,9 +69,9 @@ class ItemHandler {
          
          
          //*********TEST ITEMS FOR USE WITH COLLISIONSLAB*********/
-         //m_itemList[0] = new Items(0,-1, 10, "Lemon", false, 100, 100, 1);
-         //m_itemList[1] = new Items(0, -1, 11, "heart", false, 200,200,2);
-         //m_itemList[2] = new Items(0,-1, 10, "Lemon", false, 500, 100, 3);
+         m_itemList[0] = new Items(0,-1, 10, "Lemon", false, 246, 596, 0);
+         m_itemList[1] = new Items(0, -1, 11, "heart", false, 200,200,2);
+         m_itemList[2] = new Items(0,-1, 10, "Lemon", false, 500, 100, 3);
           
          
       }
@@ -99,7 +98,10 @@ class ItemHandler {
       //may be implemented if we implement inventory screen
       int getWeaponSlot() {return m_currWeapon;}
       int getItemSlot() {return m_currItem;}
-      //returns current Item to use for HUD&Player
+      //returns pointer to current Item to use for HUD&Player
+      //then use that to access that items methods like so:
+      // Items* item = getItem();
+      //item->getName();
       Items* getWeapon() {return m_weaponInv[m_currWeapon];}
       Items* getItem() {return m_itemInv[m_currItem];}
       //add new item to inventory Used by Items.cpp

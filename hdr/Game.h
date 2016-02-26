@@ -34,8 +34,8 @@ class Game {
         // getInstance() method above
         Game() {
            m_margine = 4;
-           m_width = 1023;
-           m_height = 731;
+           m_width = 1055;
+           m_height = 1055;
            m_arraypos = 3;
         }; // Default Constructor (the {} brackets) are needed here, even if it is empty
         
@@ -63,7 +63,7 @@ class Game {
 	  GLuint m_splashTexture;
       
       // Items in the game
-      Player m_myPlayer;
+     // Player m_myPlayer;
       
 
    public:
@@ -76,6 +76,8 @@ class Game {
       static void run();
       static void idle();
       static void timer(int id);
+      int getHeight(){return m_height;}
+      int getWidth(){return m_width;}
       void keyOperations();
       void update();
       void splashScreen();
@@ -86,7 +88,8 @@ class Game {
       int getArrayPos();
       void setArrayPos(int pos);
       void init();
-
+      
+      Player m_myPlayer;
       GLfloat frand();
 };
 

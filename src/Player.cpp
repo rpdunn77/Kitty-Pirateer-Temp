@@ -1,5 +1,5 @@
-#include "Player.h"
-#include "Jukebox.h"
+#include "../hdr/Player.h"
+#include "../hdr/Jukebox.h"
 #include <GL/glut.h>    /* glut.h includes gl.h and glu.h */
 #include <math.h>
 #include <stdlib.h>
@@ -7,8 +7,8 @@
 #include <GL/freeglut.h>
 #include <iostream>
 
-#include "ImageLoader.h" 
-#include "Game.h"
+#include "../hdr/ImageLoader.h" 
+#include "../hdr/Game.h"
 
 class ImageLoader;
 
@@ -19,14 +19,14 @@ void Player::left ()
     
    	if(m_x-5 <= 0)
    	{
-      	if(Game::getInstance().getArrayPos() != 3 && Game::getInstance().getArrayPos() != 1){
+      	if(Game::getInstance().getArrayPos() != 0 && Game::getInstance().getArrayPos() != 3 && Game::getInstance().getArrayPos() != 6){
       		m_arraypos -= 1;
          	Game::getInstance().changeScreen(m_arraypos);
          	Game::getInstance().setArrayPos(m_arraypos);
-	      	m_x = 968 ;
+	      	m_x = Game::getInstance().getWidth() - m_size -5;
       	}
    	}else{
-	   	m_x -= 4*m_speed;
+	   	m_x -= m_stepSize*m_speed;
    	}
    }
    m_direction = 3;
@@ -37,16 +37,16 @@ void Player::right ()
    if(!stopright){
       m_arraypos = Game::getInstance().getArrayPos();
 
-   	if(m_x+55 >= 1023)
+   	if(m_x+55 >= Game::getInstance().getWidth())
    	{
-      	if(Game::getInstance().getArrayPos() != 2 && Game::getInstance().getArrayPos() != 4){
+      	if(Game::getInstance().getArrayPos() != 2 && Game::getInstance().getArrayPos() != 5 && Game::getInstance().getArrayPos() != 8){
       		m_arraypos +=1;
 	      	Game::getInstance().changeScreen(m_arraypos);
          	Game::getInstance().setArrayPos(m_arraypos);
 	      	m_x = 5;
       	}
    	}else{
-			m_x += 4*m_speed;
+			m_x += m_stepSize*m_speed;
    	}
    }
    m_direction = 1;
@@ -57,16 +57,16 @@ void Player::up ()
    if(!stopup){
       m_arraypos = Game::getInstance().getArrayPos();
 
-  		if(m_y+60 >= 731)
+  		if(m_y+60 >= Game::getInstance().getHeight())
   		{
-      	if(Game::getInstance().getArrayPos() != 1 && Game::getInstance().getArrayPos() != 2){
-      		m_arraypos-=2;
+      	if(Game::getInstance().getArrayPos() != 0 && Game::getInstance().getArrayPos() != 1 && Game::getInstance().getArrayPos() != 2){
+      		m_arraypos-=3;
 	      	Game::getInstance().changeScreen(m_arraypos);
          	Game::getInstance().setArrayPos(m_arraypos);
 	      	m_y = 5;
      		}
   		}else{
-			m_y +=4*m_speed;
+			m_y +=m_stepSize*m_speed;
 		}
    }
    m_direction = 0;
@@ -79,14 +79,14 @@ void Player::down ()
 
   		if(m_y-5 <= 0)
   		{
-      	if(Game::getInstance().getArrayPos() != 3 && Game::getInstance().getArrayPos() != 4){
-      		m_arraypos +=2;
+      	if(Game::getInstance().getArrayPos() != 6 && Game::getInstance().getArrayPos() != 7 && Game::getInstance().getArrayPos() != 8){
+      		m_arraypos +=3;
 	      	Game::getInstance().changeScreen(m_arraypos);
          	Game::getInstance().setArrayPos(m_arraypos);
-	      	m_y = 676;
+	      	m_y = Game::getInstance().getHeight()-m_size -5;
       	}
    	}else{
-			m_y -= 4 * m_speed;
+			m_y -= m_stepSize * m_speed;
   		}
    }
 	m_direction = 2;
@@ -112,7 +112,7 @@ void Player::displayTexture ()
    glEnable(GL_TEXTURE_2D);
    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_REPLACE);
    glBindTexture (GL_TEXTURE_2D, m_PlayerTexture);
-   ImageLoader::rectangle(m_x,m_y, 50, 50);
+   ImageLoader::rectangle(m_x,m_y, m_size, m_size);
    glDisable(GL_TEXTURE_2D);
    glFlush();
 
@@ -226,7 +226,8 @@ Player::Player(int x, int y)
    m_direction = 2;
    m_arraypos = 0;
    m_speed = 1;
-   m_size = 48;
+   m_size = 20;
+   m_stepSize = 2;
    stopright=false;
    stopleft=false;
    stopup=false;

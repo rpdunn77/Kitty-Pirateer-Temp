@@ -5,11 +5,12 @@
 //******************************************//
 
 
-#include "Weapon.h"
-#include "Items.h"
+#include "../hdr/Weapon.h"
+#include "../hdr/Items.h"
 #include <GL/glut.h>
 #include <GL/freeglut.h>
 
+//to be completed for final project
 void Weapon::display()
 {
 

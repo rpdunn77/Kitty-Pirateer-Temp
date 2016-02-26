@@ -1,7 +1,14 @@
+//******************************************//
+//********** Title: Weapon.h      **********//
+//********** Author: Robert Dunn  **********//
+//********** Purpose:             **********//
+//******************************************//
+
+
 #ifndef WEAPONS_H_
 #define WEAPONS_H_
 #include <string>
-#include "Items.h"
+#include "../hdr/Items.h"
 class Weapon: public Items{
    private:
       int m_damage;  //weapon damage

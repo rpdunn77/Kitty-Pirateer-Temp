@@ -1,6 +1,6 @@
-#include "Game.h"
-#include "Jukebox.h"
-#include "Obstacle.h"
+#include "../hdr/Game.h"
+#include "../hdr/Jukebox.h"
+#include "../hdr/Obstacle.h"
 #include <cstdio>
 #include <stdlib.h>
 #include <GL/glut.h>    /* glut.h includes gl.h and glu.h */
@@ -9,10 +9,10 @@
 #include <GL/freeglut.h>
 
 
-#include "Player.h"
-#include "ItemHandler.h"
+#include "../hdr/Player.h"
+#include "../hdr/ItemHandler.h"
 
-#include "ImageLoader.h"
+#include "../hdr/ImageLoader.h"
 
 bool Game::c_running = false;
 bool* Game::keystates = new bool[256];
@@ -137,7 +137,7 @@ void Game::splashScreen()
 void Game::changeScreen(int dir)
 {
 
-	const char* tiles[5] =  {"","./imgs/tile0.png","./imgs/tile1.png","./imgs/tile2.png","./imgs/tile3.png"};
+	const char* tiles[9] =  {"./imgs/tile0.png","./imgs/tile1.png","./imgs/tile2.png","./imgs/tile3.png","./imgs/tile4.png","./imgs/tile5.png","./imgs/tile6.png","./imgs/tile7.png","./imgs/tile8.png"};
 	m_backgroundTexture= ImageLoader::LoadTexture(tiles[dir]);
 	
 
@@ -161,6 +161,7 @@ void Game::update()
    glEnable(GL_TEXTURE_2D);
    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_REPLACE);
    glBindTexture (GL_TEXTURE_2D, m_backgroundTexture);
+   //ImageLoader::rectangle(0,0, m_width, m_height);
    ImageLoader::rectangle(0,0, m_width, m_height);
    glDisable(GL_TEXTURE_2D);
    glFlush();
@@ -232,7 +233,7 @@ void Game::init() {
    //applications, the main application loop generally does three things:
    //  1. check the current event queues, and process any events (e.g., 
    //     mouse movement, key presses, etc.) that have occurred since the last check
-   //  2.update the application state - things like player and object positions, 
+   //  2.update the application state - things like Player and object positions, 
    //    game physics, etc. - in preparation of the next rendering frame
    //  3.render the current frame.
    // GLUT does these steps implicitly in its glutMainLoop()
@@ -244,7 +245,7 @@ void Game::init() {
     //glutIdleFunc(Game::run);    // Wait time between frames.
 
 
-   m_backgroundTexture= ImageLoader::LoadTexture( "./imgs/tile2.png" );
+   m_backgroundTexture= ImageLoader::LoadTexture( "./imgs/tile3.png" );
    m_myPlayer.init();
 
     glutMainLoop(); // glutMainLoop enters the GLUT event processing loop. 
