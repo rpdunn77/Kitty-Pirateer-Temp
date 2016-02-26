@@ -4,7 +4,10 @@ OBJ = Game.cpp \
       Player.cpp \
       ImageLoader.cpp \
       Jukebox.cpp \
-		Obstacle.cpp
+		Obstacle.cpp \
+		Items.cpp \
+		ItemHandler.cpp\
+		Weapon.cpp
       
 All: $(OBJ)
 	$(CC) $(OBJ)  $(LDLIBS) -o game

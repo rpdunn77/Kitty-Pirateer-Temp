@@ -1,36 +1,23 @@
-#include "Items.h"
+#include "../hdr/Items.h"
 #include <GL/glut.h>
 #include <GL/freeglut.h>
 #include <string>
-#include "ImageLoader.h"
-#include "Game.h"
+#include "../hdr/ImageLoader.h"
+#include "../hdr/Game.h"
 
 class ImageLoader;
 
-int Items::equip()
+void Items::pickUp()
+{
+   
+}
+
+void Items::display()
 {
 
 }
 
-int Items::pickUp()
-{
-
-}
-
-Items::int display()
-{
-   ImageLoader::rectangle
-}
-
-/*
-void Items::iSwitch()
-{
-   Item
-   if(ItemHandler::getInstance().
-
-}
-*/
-void Items::iUse()
+void Items::update()
 {
 
 }
@@ -41,5 +28,6 @@ Items::Items(int r, int inv, int id, std::string name)
    m_invslot = inv;
    m_itemID = id;
    m_name = "name";
+   m_ammount = 1;
 }
 

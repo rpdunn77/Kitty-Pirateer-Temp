@@ -3,8 +3,9 @@
 #define MAXITEMS 50
 #define MAXINV 10
 
-#include "Items.h"
-#include "GameObject.h"
+#include "../hdr/Items.h"
+#include "../hdr/GameObject.h"
+#include "../hdr/Weapon.h"
 
 /*
 Item ID:
@@ -17,7 +18,7 @@ Item ID:
 
 
 
-class ItemHandler: public GameObject{
+class ItemHandler {
    public:
       static ItemHandler& getInstance()
       {
@@ -31,16 +32,17 @@ class ItemHandler: public GameObject{
          m_currItem = 0;
          m_lastWeapon = 0;
          m_lastItem = 0;
-         Items sword = new Weapon(10,3,0,0);
-         Items lemon = new Item(0,0,10, "Lemon");
-         m_weaponInv[0] =  sword;
-         m_itemInv[0] = lemon;
+         m_weaponInv[0] = new Weapon(10,3,0,0,"sword", 0);
+         m_itemInv[0] = new Items(0,0,10, "Lemon");
       }
+      
+      ItemHandler(ItemHandler const&);
+      void operator=(ItemHandler const&);
    
    private:
-         Items m_itemlist[MAXITEMS];
-         Items m_itemInv[MAXINV];
-         Items m_weaponInv[MAXINV];    
+         Items *m_itemlist[MAXITEMS];
+         Items *m_itemInv[MAXINV];
+         Items *m_weaponInv[MAXINV];    
          int m_invStack[MAXINV]; //amount of that item you are holding. ie character has
                                  //3 lemons, lemons are in slot 10, so m_invStack[10] = 3; 
          int m_currWeapon;       //current weapon in item array
@@ -49,28 +51,18 @@ class ItemHandler: public GameObject{
          int m_lastItem;         //last item slot in your inventory
       
    public:
-      Items getWeaponInv(){return m_weaponInv;}
-      Items getItemInv(){return m_itemInv;
-      int getWeaponSlot(){return m_currWeapon;}
-      int getItemSlot(){return m_currItem;}
-      Items getWeapon(){return m_weaponInv[currWeapon];}
-      Items getItem(){return m_itemInv[currItem];}
-      void setWeaponSlot(int w){m_currWeapon = w;}
-      void setItemSlot(int i){m_currItem = i;}
+      Items* getWeaponInv() {return *m_weaponInv;}
+      Items* getItemInv() {return *m_itemInv;}
+      int getWeaponSlot() {return m_currWeapon;}
+      int getItemSlot() {return m_currItem;}
+      Items* getWeapon() {return m_weaponInv[m_currWeapon];}
+      Items* getItem() {return m_itemInv[m_currItem];}
+      //void setWeaponSlot(int w){m_currWeapon = w;}
+      //void setItemSlot(int i){m_currItem = i;}
       void display();
       void iSwitch();
       void wSwitch();
-      void iUse();
-      void wUse();
-      
-
-
-
-
-
-
-
-
+      void iUse();      
 
 };
 #endif
