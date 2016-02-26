@@ -9,6 +9,7 @@
 #include <GL/glut.h>    /* glut.h includes gl.h and glu.h */
 
 #include "Player.h"
+#include "ItemHandler.h"
 
 
 class Player;

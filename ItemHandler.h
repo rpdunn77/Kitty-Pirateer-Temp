@@ -3,15 +3,16 @@
 #define MAXITEMS 50
 #define MAXINV 10
 
-#include "../hdr/Items.h"
-#include "../hdr/GameObject.h"
-#include "../hdr/Weapon.h"
+#include "Items.h"
+#include "GameObject.h"
+#include "Weapon.h"
 
 /*
 Item ID:
    0: sword
 
    10:lemon
+   11:health
 
 */
 
@@ -31,16 +32,17 @@ class ItemHandler {
          m_currWeapon = 0;
          m_currItem = 0;
          m_lastWeapon = 0;
-         m_lastItem = 0;
-         m_weaponInv[0] = new Weapon(10,3,0,0,"sword", 0);
-         m_itemInv[0] = new Items(0,0,10, "Lemon");
+         m_lastItem = 1;
+         m_weaponInv[0] = new Weapon(10,3,0,0,"sword", 0,true);
+         m_itemInv[0] = new Items(0,0,10, "Lemon",true);
+         m_itemInv[1] = new Items(0,0,10, "Lime", true);
       }
       
       ItemHandler(ItemHandler const&);
       void operator=(ItemHandler const&);
    
    private:
-         Items *m_itemlist[MAXITEMS];
+         Items *m_itemList[MAXITEMS];
          Items *m_itemInv[MAXINV];
          Items *m_weaponInv[MAXINV];    
          int m_invStack[MAXINV]; //amount of that item you are holding. ie character has

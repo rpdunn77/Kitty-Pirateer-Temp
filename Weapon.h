@@ -1,7 +1,7 @@
 #ifndef WEAPONS_H_
 #define WEAPONS_H_
 #include <string>
-#include "../hdr/Items.h"
+#include "Items.h"
 class Weapon: public Items{
    private:
       int m_damage;  //weapon damage
@@ -14,7 +14,7 @@ class Weapon: public Items{
       int getType(){return m_type;}
       void display();
       void update();
-      Weapon(int d, int r, int invs, int id, std::string name, int type);
+      Weapon(int d, int r, int invs, int id, std::string name, int type, bool pickup);
       Weapon(){};
 };
 

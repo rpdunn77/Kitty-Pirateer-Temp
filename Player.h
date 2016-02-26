@@ -32,6 +32,9 @@ class Player {
     void update (Obstacle *obstacle[],int size, int quad);
     void collisions(int xpos, int ypos, int width, int height, int cond, int quad);
     void init();
+    int getX(){return m_x;}
+    int getY(){return m_y;}
+    int getSize(){return m_size;}
     Player(int x = 500, int y = 500);
 };
 

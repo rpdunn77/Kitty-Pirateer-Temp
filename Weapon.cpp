@@ -1,4 +1,5 @@
-#include "../hdr/Weapon.h"
+#include "Weapon.h"
+#include "Items.h"
 
 void Weapon::display()
 {
@@ -10,7 +11,7 @@ void Weapon::update()
 
 }
 
-Weapon::Weapon(int d, int r, int invs, int id, std::string name, int type)
+Weapon::Weapon(int d, int r, int invs, int id, std::string name, int type, bool pickup)
 {  
    m_damage = d;
    m_range = r;
@@ -18,5 +19,6 @@ Weapon::Weapon(int d, int r, int invs, int id, std::string name, int type)
    m_itemID = id;
    m_name = name, 
    m_type = type;
+   m_pickedUp = pickup;
 
 }

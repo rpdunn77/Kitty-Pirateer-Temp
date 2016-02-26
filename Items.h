@@ -2,7 +2,7 @@
 #define ITEMS_H_
 
 #include <string>
-#include "../hdr/GameObject.h"
+#include "GameObject.h"
 
 class Items: public GameObject{
    protected:
@@ -12,18 +12,20 @@ class Items: public GameObject{
       int m_invslot; //which inventory slot
                      //item is currently in
       int m_itemID;  //item id states which
-                     //type of item it is     
+                     //type of item it is    
+      bool m_pickedUp; 
 
 
    public:
       int getInvSlot(){return m_invslot;}//get current inv slot
       int getItemID(){return m_itemID;}
       int getAmmount(){return m_ammount;}
+      int getRange(){return m_range;}
       std::string getName(){return m_name;}
       void pickUp();  //when picked up
       virtual void display();
       virtual void update();
-      Items(int r, int inv, int id, std::string name);
+      Items(int r, int inv, int id, std::string name,bool pickup);
       Items (){};
 };
 #endif

@@ -10,6 +10,7 @@
 
 
 #include "Player.h"
+#include "ItemHandler.h"
 
 #include "ImageLoader.h"
 
@@ -100,6 +101,8 @@ void Game::key(unsigned char key, int x, int y)
    keystates[key] = true;
    if (key == ' ')
       Game::c_running = !Game::c_running;
+   if (key == 'u')
+      ItemHandler::getInstance().iSwitch();
 }
 
 void Game::splashScreen()
