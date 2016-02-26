@@ -1,3 +1,10 @@
+//******************************************//
+//********** Title: Items.cpp     **********//
+//********** Author: Robert Dunn  **********//
+//********** Purpose:             **********//
+//******************************************//
+
+
 #include "Items.h"
 #include <GL/glut.h>
 #include <GL/freeglut.h>
@@ -5,6 +12,8 @@
 #include "ImageLoader.h"
 #include "Game.h"
 #include <iostream>
+//REMOVE
+//#include "pc.h"
 
 class ImageLoader;
 
@@ -14,20 +23,38 @@ void Items::setAmmount(int x)
 }
 
 void Items::pickUp(Items* item)
-{  int playerX = Game::getInstance().m_myPlayer.getX();
-   int playerY = Game::getInstance().m_myPlayer.getY();
-   int playerSize = Game::getInstance().m_myPlayer.getSize();
+{  
+   //temp x, y and size for player to keep code cleaner
+   //REMOVE
+   //int playerX = pc::getInstance().getX();
+   //int playerY = pc::getInstance().getY();
+   //int playerSize = pc::getInstance().getSize();
+   
+         //following was used for testing
+   //int playerX = Game::getInstance().m_myPlayer.getX();
+   //int playerY = Game::getInstance().m_myPlayer.getY();
+   //int playerSize = Game::getInstance().m_myPlayer.getSize();
+   
+   //temp for compiling
+   int playerX, playerY, playerSize;
+   
+   //checks if item is colliding with player
    if(playerX + playerSize > m_x && playerX < m_x + 25 && 
       playerY + playerSize > m_y && playerY < m_y + 25 &&
       Game::getInstance().getArrayPos() == m_tilePos){
-      if(m_pickedUp == false){
+      if(m_pickedUp == false){//if Item hasn't been picked up yet
          m_pickedUp = true;
          switch (m_itemID){
-            case 10:
+            case 10://add item to inventory
                ItemHandler::getInstance().addItemToInv(item);
                break;
-            case 11:
-               std::cout << "health Increased" << std::endl;   
+            case 11://heal player
+               //need a healPlayer(int x) which will add x to player health
+               
+               //REMOVE
+               //pc::getInstance().healPlayer(10);
+               
+               //std::cout << "health Increased" << std::endl;   
                break;
       
          }
@@ -37,9 +64,14 @@ void Items::pickUp(Items* item)
 
 void Items::display()
 {
+   //display if character is in correct tile
    if(Game::getInstance().getArrayPos() == m_tilePos){
+   
+   //REMOVE
+   //if(pc::getInstance().getTile() == m_tilePos){
+   
       if(m_pickedUp == false){
-
+         //draw image
          glEnable(GL_TEXTURE_2D);
    
          glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_REPLACE);
@@ -74,9 +106,13 @@ Items::Items(int r, int inv, int id, std::string name,bool pickup,int x, int y, 
    switch (m_itemID){
       case 10:
          m_itemTexture = ImageLoader::LoadTexture("./imgs/lemon.png");
+         //REMOVE
+         //m_itemTexture = ImageLoader::LoadTexture("../imgs/lemon.png");
          break;
       case 11:
          m_itemTexture = ImageLoader::LoadTexture("./imgs/heart.png");
+         //REMOVE
+         //m_itemTexture = ImageLoader::LoadTexture("../imgs/heart.png");
          break; 
    }
    

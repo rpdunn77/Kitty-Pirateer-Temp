@@ -1,8 +1,13 @@
+//********************************************//
+//********** Title: ItemHandler.cpp **********//
+//********** Author: Robert Dunn    **********//
+//********** Purpose:               **********//
+//********************************************//
+
+
 #include "ItemHandler.h"
-#include "Game.h"
 #include "Items.h"
 #include <iostream>
-
 #include <string>
 
 void ItemHandler::addItemToInv(Items* item)

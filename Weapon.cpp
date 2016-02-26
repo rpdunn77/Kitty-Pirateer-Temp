@@ -1,8 +1,16 @@
+//******************************************//
+//********** Title: Weapon.cpp    **********//
+//********** Author: Robert Dunn  **********//
+//********** Purpose:             **********//
+//******************************************//
+
+
 #include "Weapon.h"
 #include "Items.h"
 #include <GL/glut.h>
 #include <GL/freeglut.h>
 
+//to be completed for final project
 void Weapon::display()
 {
 
