@@ -5,19 +5,21 @@
 
 #include "Items.h"
 #include "GameObject.h"
+#include "Weapon.h"
 
 /*
 Item ID:
    0: sword
 
    10:lemon
+   11:health
 
 */
 
 
 
 
-class ItemHandler: public GameObject{
+class ItemHandler {
    public:
       static ItemHandler& getInstance()
       {
@@ -29,44 +31,54 @@ class ItemHandler: public GameObject{
       ItemHandler(){
          m_currWeapon = 0;
          m_currItem = 0;
-         Items sword = new Weapon(10,3,0,0);
-         Items lemon = new Item(0,0,10, "Lemon");
-         m_weaponInv[0] =  sword;
-         m_itemInv[0] = lemon;
+         m_lastWeapon = 0;
+         m_lastItem = 0;
+         m_numOfItems = 3;
+         m_weaponInv[0] = new Weapon(10,3,0,0,"Sword", 0,true,-1,-1,-1);
+         m_itemInv[0] = new Items(0,0,10, "Lemon",true,-1,-1,-1);
+         
+         
+         //for now, I will create 10 Item objects into the m_itemList[]. 
+         //final product will have a 2D array, which creates items and
+         //deletes Items per screen, it will also randomize the placement
+         //of the lemons.
+         
+         //m_itemList[0] = new Items(0,-1, 10, "Lemon", false, 100, 100, 1);
+         //m_itemList[1] = new Items(0, -1, 11, "heart", false, 200,200,2);
+         //m_itemList[2] = new Items(0,-1, 10, "Lemon", false, 500, 100, 3);
+          
+         
       }
+      
+      ItemHandler(ItemHandler const&);
+      void operator=(ItemHandler const&);
    
    private:
-         Items m_itemlist[MAXITEMS];
-         Items m_itemInv[MAXINV];
-         Items m_weaponInv[MAXINV];    
+         Items *m_itemList[MAXITEMS];
+         Items *m_itemInv[MAXINV];
+         Items *m_weaponInv[MAXINV];    
          int m_invStack[MAXINV]; //amount of that item you are holding. ie character has
                                  //3 lemons, lemons are in slot 10, so m_invStack[10] = 3; 
          int m_currWeapon;       //current weapon in item array
          int m_currItem;         //current item in item array
+         int m_lastWeapon;       //last weapon slot in your inventory
+         int m_lastItem;         //last item slot in your inventory
+         int m_numOfItems;
       
    public:
-      Items getWeaponInv(){return m_weaponInv;}
-      Items getItemInv(){return m_itemInv;
-      int getWeaponSlot(){return m_currWeapon;}
-      int getItemSlot(){return m_currItem;}
-      Items getWeapon(){return m_weaponInv[currWeapon];}
-      Items getItem(){return m_itemInv[currItem];}
-      void setWeaponSlot(int w){m_currWeapon = w;}
-      void setItemSlot(int i){m_currItem = i;}
-      void display();
+      Items* getWeaponInv() {return *m_weaponInv;}
+      Items* getItemInv() {return *m_itemInv;}
+      int getWeaponSlot() {return m_currWeapon;}
+      int getItemSlot() {return m_currItem;}
+      Items* getWeapon() {return m_weaponInv[m_currWeapon];}
+      Items* getItem() {return m_itemInv[m_currItem];}
+      void addItemToInv(Items* item);
+      //void setWeaponSlot(int w){m_currWeapon = w;}
+      //void setItemSlot(int i){m_currItem = i;}
+      void update();
       void iSwitch();
       void wSwitch();
-      void iUse();
-      void wUse();
-      
-
-
-
-
-
-
-
-
+      void iUse();      
 
 };
 #endif

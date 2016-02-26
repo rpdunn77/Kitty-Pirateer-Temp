@@ -137,7 +137,7 @@ void Game::splashScreen()
 void Game::changeScreen(int dir)
 {
 
-	const char* tiles[5] =  {"","./imgs/north.bmp","./imgs/east.bmp","./imgs/south.bmp","./imgs/west.bmp"};
+	const char* tiles[5] =  {"","./imgs/tile0.png","./imgs/tile1.png","./imgs/tile3.png","./imgs/tile4.png"};
 	m_backgroundTexture= ImageLoader::LoadTexture(tiles[dir]);
 	
 
@@ -164,16 +164,16 @@ void Game::update()
    ImageLoader::rectangle(0,0, m_width, m_height);
    glDisable(GL_TEXTURE_2D);
    glFlush();
-
+   
    if(!Game::c_running)
    {
       return splashScreen();
    }
 
-
    m_myPlayer.update(m_myGameObjects3,3,4);
      
    m_myPlayer.update(m_myGameObjects4,1,3);
+   ItemHandler::getInstance().update();
    m_myPlayer.display();
 }
 
@@ -244,7 +244,7 @@ void Game::init() {
     //glutIdleFunc(Game::run);    // Wait time between frames.
 
 
-   m_backgroundTexture= ImageLoader::LoadTexture( "./imgs/south.bmp" );
+   m_backgroundTexture= ImageLoader::LoadTexture( "./imgs/tile3.png" );
    m_myPlayer.init();
 
     glutMainLoop(); // glutMainLoop enters the GLUT event processing loop. 

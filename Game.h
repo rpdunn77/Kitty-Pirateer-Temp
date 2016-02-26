@@ -63,7 +63,7 @@ class Game {
 	  GLuint m_splashTexture;
       
       // Items in the game
-      Player m_myPlayer;
+     // Player m_myPlayer;
       
 
    public:
@@ -86,7 +86,8 @@ class Game {
       int getArrayPos();
       void setArrayPos(int pos);
       void init();
-
+      
+      Player m_myPlayer;
       GLfloat frand();
 };
 

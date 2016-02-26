@@ -80,7 +80,7 @@ void Player::down ()
   		if(m_y-5 <= 0)
   		{
       	if(Game::getInstance().getArrayPos() != 3 && Game::getInstance().getArrayPos() != 4){
-      		m_array+=2;
+      		m_arraypos +=2;
 	      	Game::getInstance().changeScreen(m_arraypos);
          	Game::getInstance().setArrayPos(m_arraypos);
 	      	m_y = 676;
@@ -104,6 +104,7 @@ void Player::honk ()
 void Player::display ()
 {
    displayTexture ();
+      ImageLoader::rectangle(100,100, 50, 50);
 }
 
 void Player::displayTexture ()
@@ -160,9 +161,9 @@ void Player::collisions(int xpos, int ypos, int width, int height, int cond,int 
 		float corner = pow((circledistancex - m_size/2),2) +
 							pow((circledistancey - m_size/2),2);
 		if(circledistancex > (m_size/2 + width)){	
-			//m_speed = 1;
+			m_speed = 1;
 		}else if(circledistancey > (m_size/2 + width)){	
-			//m_speed = 1;
+			m_speed = 1;
 		}else if(circledistancex <= (m_size/2)){
       	//m_speed = 0.5;
       	if(c_up){

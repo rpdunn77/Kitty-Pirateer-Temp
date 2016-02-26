@@ -5,10 +5,28 @@
 
 #include <string>
 
-void ItemHandler::display()
+void ItemHandler::addItemToInv(Items* item)
 {
-   for(int i = 0; i <= m_lastItem; i++){
+   bool placed;
+   for(int i=0;i<=m_lastItem;i++){
+      if(item->getItemID() == m_itemInv[i]->getItemID()){
+         m_itemInv[i]->setAmmount(item->getAmmount() + m_itemInv[i]->getAmmount());
+         placed = true;
+      }
+   }
+   if(placed == false){
+      m_lastItem++;
+      m_itemInv[m_lastItem] = item;
+   }
+   
+}
+
+
+void ItemHandler::update()
+{
+   for(int i = 0; i < m_numOfItems; i++){
       m_itemList[i]->display();
+      m_itemList[i]->pickUp(m_itemList[i]);
    }
    
 }
@@ -22,7 +40,8 @@ void ItemHandler::iSwitch()
    }
    
    std::string name = m_itemInv[m_currItem]->getName();
-   std::cout << name << std::endl;
+   int ammount = m_itemInv[m_currItem]->getAmmount();
+   std::cout << name << ": " << ammount << std::endl;
    
 }
 

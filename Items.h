@@ -2,6 +2,7 @@
 #define ITEMS_H_
 
 #include <string>
+#include <GL/freeglut.h>
 #include "GameObject.h"
 
 class Items: public GameObject{
@@ -14,6 +15,11 @@ class Items: public GameObject{
       int m_itemID;  //item id states which
                      //type of item it is    
       bool m_pickedUp; 
+      int m_tilePos;
+      int m_x;
+      int m_y;
+      
+      GLuint m_itemTexture;
 
 
    public:
@@ -22,10 +28,12 @@ class Items: public GameObject{
       int getAmmount(){return m_ammount;}
       int getRange(){return m_range;}
       std::string getName(){return m_name;}
-      void pickUp();  //when picked up
+      void setAmmount(int x);
+      void pickUp(Items* item);  //when picked up
       virtual void display();
       virtual void update();
-      Items(int r, int inv, int id, std::string name,bool pickup);
+      
+      Items(int r, int inv, int id, std::string name,bool pickup, int x, int y, int tile);
       Items (){};
 };
 #endif

@@ -14,7 +14,7 @@ class Weapon: public Items{
       int getType(){return m_type;}
       void display();
       void update();
-      Weapon(int d, int r, int invs, int id, std::string name, int type, bool pickup);
+      Weapon(int d, int r, int invs, int id, std::string name, int type, bool pickup,int x, int y, int tile);
       Weapon(){};
 };
 

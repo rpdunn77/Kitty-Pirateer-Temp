@@ -30,7 +30,7 @@ void Player::left ()
    	}
    }
    m_direction = 3;
-   m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/cat.png" );
+   m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/Left.bmp" );
 }
 void Player::right ()
 {

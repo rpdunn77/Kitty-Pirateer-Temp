@@ -9,7 +9,8 @@
 #include <GL/freeglut.h>
 
 
-#include "Car.h"
+#include "Player.h"
+#include "ItemHandler.h"
 
 #include "ImageLoader.h"
 
@@ -62,28 +63,28 @@ void Game::run() {
 void Game::keyOperations()
 {
    if(keystates['a']){
-      Game::getInstance().m_myCar.left();
-      Game::getInstance().m_myCar.c_left = true;
+      Game::getInstance().m_myPlayer.left();
+      Game::getInstance().m_myPlayer.c_left = true;
    }else{
-   	Game::getInstance().m_myCar.c_left = false;
+   	Game::getInstance().m_myPlayer.c_left = false;
    }
    if(keystates['w']){
-      Game::getInstance().m_myCar.up();
-      Game::getInstance().m_myCar.c_up = true;
+      Game::getInstance().m_myPlayer.up();
+      Game::getInstance().m_myPlayer.c_up = true;
    }else{
-   	Game::getInstance().m_myCar.c_up = false;
+   	Game::getInstance().m_myPlayer.c_up = false;
    }
    if(keystates['d']){
-      Game::getInstance().m_myCar.right();
-      Game::getInstance().m_myCar.c_right = true;
+      Game::getInstance().m_myPlayer.right();
+      Game::getInstance().m_myPlayer.c_right = true;
    }else{
-   	Game::getInstance().m_myCar.c_right = false;
+   	Game::getInstance().m_myPlayer.c_right = false;
    }
    if(keystates['s']){
-      Game::getInstance().m_myCar.down();
-      Game::getInstance().m_myCar.c_down = true;
+      Game::getInstance().m_myPlayer.down();
+      Game::getInstance().m_myPlayer.c_down = true;
    }else{
-   	Game::getInstance().m_myCar.c_down = false;
+   	Game::getInstance().m_myPlayer.c_down = false;
    }
 
 }
@@ -100,6 +101,8 @@ void Game::key(unsigned char key, int x, int y)
    keystates[key] = true;
    if (key == ' ')
       Game::c_running = !Game::c_running;
+   if (key == 'u')
+      ItemHandler::getInstance().iSwitch();
 }
 
 void Game::splashScreen()
@@ -134,7 +137,7 @@ void Game::splashScreen()
 void Game::changeScreen(int dir)
 {
 
-	const char* tiles[5] =  {"","./imgs/north.bmp","./imgs/east.bmp","./imgs/south.bmp","./imgs/west.bmp"};
+	const char* tiles[5] =  {"","./imgs/tile0.png","./imgs/tile1.png","./imgs/tile2.png","./imgs/tile3.png"};
 	m_backgroundTexture= ImageLoader::LoadTexture(tiles[dir]);
 	
 
@@ -161,17 +164,17 @@ void Game::update()
    ImageLoader::rectangle(0,0, m_width, m_height);
    glDisable(GL_TEXTURE_2D);
    glFlush();
-
+   
    if(!Game::c_running)
    {
       return splashScreen();
    }
 
-
-   m_myCar.update(m_myGameObjects3,3,4);
+   m_myPlayer.update(m_myGameObjects3,3,4);
      
-   m_myCar.update(m_myGameObjects4,1,3);
-   m_myCar.display();
+   m_myPlayer.update(m_myGameObjects4,1,3);
+   ItemHandler::getInstance().update();
+   m_myPlayer.display();
 }
 
 
@@ -202,7 +205,10 @@ void Game::init() {
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_ALPHA_TEST);
+    glEnable(GL_BLEND);
     glDepthFunc(GL_LESS);
+    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
@@ -231,15 +237,15 @@ void Game::init() {
    //  3.render the current frame.
    // GLUT does these steps implicitly in its glutMainLoop()
 
-   // Set up the callbacks that will be taken care of in step 1:
+   // Set up the callbacks that will be taken Playere of in step 1:
     glutKeyboardFunc(Game::key); // Keyboard input
     glutKeyboardUpFunc(Game::keyUp);
     glutDisplayFunc(Game::run);  // Display frames
     //glutIdleFunc(Game::run);    // Wait time between frames.
 
 
-   m_backgroundTexture= ImageLoader::LoadTexture( "./imgs/south.bmp" );
-   m_myCar.init();
+   m_backgroundTexture= ImageLoader::LoadTexture( "./imgs/tile2.png" );
+   m_myPlayer.init();
 
     glutMainLoop(); // glutMainLoop enters the GLUT event processing loop. 
                     //This routine should be called at most once in a GLUT program. 
