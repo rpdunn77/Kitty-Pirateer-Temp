@@ -57,8 +57,11 @@ void Items::pickUp(Items* item)
                //REMOVEComments
                //Player::getInstance().addHealth(10);
                
-               std::cout << "health Increased" << std::endl;   
+               std::cout << "health Increased:10" << std::endl;   
                break;
+            case 12:
+               //Player::getInstance().addHealth(20);
+               std::cout << "health Increased: 20" << std::endl;                  
       
          }
       }     
@@ -104,19 +107,18 @@ Items::Items(int r, int inv, int id, std::string name,bool pickup,int x, int y, 
    m_x = x;
    m_y = y;
    m_tilePos = tile;
-   m_itemWidth = 15;
+   m_itemWidth = 30;
 
    //switchcase
    switch (m_itemID){
       case 10:
          m_itemTexture = ImageLoader::LoadTexture("./imgs/lemon.png");
-         //REMOVE
-         //m_itemTexture = ImageLoader::LoadTexture("../imgs/lemon.png");
          break;
       case 11:
          m_itemTexture = ImageLoader::LoadTexture("./imgs/heart.png");
-         //REMOVE
-         //m_itemTexture = ImageLoader::LoadTexture("../imgs/heart.png");
+         break;
+      case 12:
+         m_itemTexture = ImageLoader::LoadTexture("./imgs/healthPotion.png");
          break; 
    }
    
