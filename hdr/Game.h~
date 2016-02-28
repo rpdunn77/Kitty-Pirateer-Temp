@@ -8,11 +8,11 @@
 #include <stdlib.h>
 #include <GL/glut.h>    /* glut.h includes gl.h and glu.h */
 
-#include "PC.h"
+#include "Player.h"
 #include "ItemHandler.h"
 
 
-class PC;
+class Player;
 class ImageLoader;
 class Obstacle;
 
@@ -63,7 +63,7 @@ class Game {
 	  GLuint m_splashTexture;
       
       // Items in the game
-     // PC m_myPC;
+     // Player m_myPlayer;
       
 
    public:
@@ -88,8 +88,9 @@ class Game {
       int getArrayPos();
       void setArrayPos(int pos);
       void init();
+      int m_lastAttacked;
       
-      PC m_myPC;
+      Player m_myPlayer;
       GLfloat frand();
 };
 

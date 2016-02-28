@@ -16,7 +16,7 @@ class Player {
     int m_arraypos;
     float m_speed;
     int m_stepSize;
-    int m_lastAttack;
+    clock_t m_lastAttack;
     
     
     bool stopup,stopdown,stopright,stopleft;

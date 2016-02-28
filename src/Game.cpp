@@ -92,7 +92,6 @@ void Game::keyOperations()
 void Game::keyUp(unsigned char key, int x, int y)
 {
    keystates[key] = false;
-
 }
 
 void Game::key(unsigned char key, int x, int y)
@@ -103,6 +102,9 @@ void Game::key(unsigned char key, int x, int y)
       Game::c_running = !Game::c_running;
    if (key == 'u')
       ItemHandler::getInstance().iSwitch();
+   if (key == 'j')
+      Game::getInstance().m_myPlayer.attack();
+ 
 }
 
 void Game::splashScreen()

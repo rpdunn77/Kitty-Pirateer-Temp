@@ -99,7 +99,7 @@ class ItemHandler {
    private:
          Items *m_itemList[MAXITEMS];  //list of all items on map
          Items *m_itemInv[MAXINV];     //items inventory
-         Items *m_weaponInv[MAXINV];   //weapon inventory
+         Weapon *m_weaponInv[MAXINV];   //weapon inventory
          int m_invStack[MAXINV]; //amount of that item you are holding. ie character has
                                  //3 lemons, lemons are in slot 10, so m_invStack[10] = 3; 
          int m_currWeapon;       //current weapon in item array
@@ -119,7 +119,7 @@ class ItemHandler {
       //then use that to access that items methods like so:
       // Items* item = getItem();
       //item->getName();
-      Items* getWeapon() {return m_weaponInv[m_currWeapon];}
+      Weapon* getWeapon() {return m_weaponInv[m_currWeapon];}
       Items* getItem() {return m_itemInv[m_currItem];}
       //add new item to inventory Used by Items.cpp
       void addItemToInv(Items* item);

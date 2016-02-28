@@ -87,6 +87,8 @@ void Items::display()
          glDisable(GL_TEXTURE_2D);
          glFlush();
          
+         ImageLoader::rectangle(0,0,100,100);
+         
       }
    }
 }
@@ -107,7 +109,7 @@ Items::Items(int r, int inv, int id, std::string name,bool pickup,int x, int y, 
    m_x = x;
    m_y = y;
    m_tilePos = tile;
-   m_itemWidth = 20;
+   m_itemWidth = 30;
 
    //switchcase
    switch (m_itemID){

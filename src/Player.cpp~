@@ -94,7 +94,18 @@ void Player::down ()
 }
 void Player::attack ()
 {
-  Game::getInstance().changeScreen(1);
+  //Game::getInstance().changeScreen(1);
+  int now;
+  int seconds;
+  now = glutGet(GLUT_ELAPSED_TIME);
+  
+  seconds =  now - m_lastAttack;
+  if (seconds > 100){
+     ItemHandler::getInstance().getWeapon()->attack();
+     m_lastAttack = glutGet(GLUT_ELAPSED_TIME);
+  } 
+ // std::cout << "now: " << now << " last attack: " << m_lastAttack << " seconds: " << seconds << std::endl;  
+  
 }
 void Player::honk ()
 {
@@ -227,10 +238,11 @@ Player::Player(int x, int y)
    m_arraypos = 0;
    m_speed = 1;
    m_size = 45;
-   m_stepSize = 2;
+   m_stepSize = 4;
    stopright=false;
    stopleft=false;
    stopup=false;
    stopdown=false;
+   m_lastAttack = glutGet(GLUT_ELAPSED_TIME);
 }
 

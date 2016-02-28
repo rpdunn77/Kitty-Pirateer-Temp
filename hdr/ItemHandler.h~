@@ -79,7 +79,7 @@ class ItemHandler {
          m_itemList[7] = new Items(0,-1, 11, "Heart", false, 838, 90, 3);
          m_itemList[8] = new Items(0,-1, 10, "Lemon", false, 214, 380, 4);
          m_itemList[9] = new Items(0,-1, 11, "Heart", false, 834, 695, 4);
-         m_itemList[10] = new Items(0,-1, 11, "Heart", false, 422, 159, 4);
+         m_itemList[10] = new Items(0,-1, 12, "Potion", false, 422, 159, 4);
          m_itemList[11] = new Items(0,-1, 11, "Heart", false, 313, 799, 4);
          m_itemList[12] = new Items(0,-1, 12, "Potion", false, 471, 136, 5);
          m_itemList[13] = new Items(0,-1, 11, "Heart", false, 201, 446, 5);
@@ -119,7 +119,7 @@ class ItemHandler {
       //then use that to access that items methods like so:
       // Items* item = getItem();
       //item->getName();
-      Items* getWeapon() {return m_weaponInv[m_currWeapon];}
+      Weapon* getWeapon() {return m_weaponInv[m_currWeapon];}
       Items* getItem() {return m_itemInv[m_currItem];}
       //add new item to inventory Used by Items.cpp
       void addItemToInv(Items* item);
