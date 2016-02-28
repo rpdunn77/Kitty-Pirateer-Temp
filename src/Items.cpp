@@ -8,6 +8,7 @@
 #include "../hdr/ImageLoader.h"
 #include "../hdr/Items.h"
 #include "../hdr/Game.h"
+#include "../hdr/Jukebox.h"
 
 #include <GL/glut.h>
 #include <GL/freeglut.h>
@@ -39,7 +40,7 @@ void Items::pickUp(Items* item)
    int PlayerY = Game::getInstance().m_myPlayer.getY();
    int PlayerWidth = Game::getInstance().m_myPlayer.getWidth();
    int PlayerHeight = Game::getInstance().m_myPlayer.getHeight();
-   
+  
    //checks if item is colliding with Player
    if(PlayerX + PlayerWidth > m_x && PlayerX < m_x + m_itemWidth && 
       PlayerY + PlayerHeight > m_y && PlayerY < m_y + m_itemWidth &&
@@ -50,18 +51,21 @@ void Items::pickUp(Items* item)
          switch (m_itemID){
             case 10://add item to inventory
                ItemHandler::getInstance().addItemToInv(item);
+               //Jukebox::PlaySound("./sounds/LemonPickUp.wav");
                break;
             case 11://heal Player
                //need a healPlayer(int x) which will add x to Player health
                
                //REMOVEComments
                //Player::getInstance().addHealth(10);
-               
-               std::cout << "health Increased:10" << std::endl;   
+               //Jukebox::PlaySound("./sounds/HeartPickUp.wav");               
+               //std::cout << "health Increased:10" << std::endl;   
                break;
             case 12:
                //Player::getInstance().addHealth(20);
-               std::cout << "health Increased: 20" << std::endl;                  
+               //Jukebox::PlaySound("./sounds/HealthPotionPickUp.wav");
+               //std::cout << "health Increased: 20" << std::endl;      
+               break;            
       
          }
       }     
