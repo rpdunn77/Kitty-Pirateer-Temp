@@ -189,19 +189,19 @@ void Game::update()
    
    //********I ADDED THIS*********//
    std::string item = "Item: ";
-   std::string ammount = "Amount: ";
+   std::string amount = "Amount: ";
    int num;
 
    item += ItemHandler::getInstance().getItem()->getName();
-   num =ItemHandler::getInstance().getItem()->getAmmount();
-   ammount += std::to_string(num);
-   //std::cout << item << ammount << std::endl;
+   num =ItemHandler::getInstance().getItem()->getAmount();
+   amount += std::to_string(num);
+   //std::cout << item << amount << std::endl;
    const char* citem = item.c_str();
-   const char* cammount = ammount.c_str();
+   const char* camount = amount.c_str();
       
     
    ImageLoader::RenderString(25, m_height - 20, GLUT_BITMAP_TIMES_ROMAN_24, citem);
-   ImageLoader::RenderString(25, m_height - 40, GLUT_BITMAP_TIMES_ROMAN_24, cammount);
+   ImageLoader::RenderString(25, m_height - 40, GLUT_BITMAP_TIMES_ROMAN_24, camount);
    
    std::string health = "Health: ";
    int numHealth = Game::getInstance().m_myPlayer.getHealth();
@@ -242,7 +242,7 @@ void Game::init() {
     srandom(time(NULL));
 
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB); // Use double buffering for smoother images
-    glutInitWindowSize(m_width+200, m_height);
+    glutInitWindowSize(m_width, m_height);
     glutInitWindowPosition(0, 0);
     glutCreateWindow("Kitty Piratier - Adventure of Zombie Island");
 

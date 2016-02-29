@@ -97,7 +97,7 @@ Weapon::Weapon(int d, int r, int invs, int id, std::string name, int type, bool 
    m_itemID = id;
    m_name = name, 
    m_type = type;
-   m_ammount = 1;
+   m_amount = 1;
    m_pickedUp = pickup;
    m_x = x;
    m_y = y;

@@ -19,9 +19,9 @@
 
 class ImageLoader;
 
-void Items::setAmmount(int x)
+void Items::setAmount(int x)
 {
-   m_ammount = x; 
+   m_amount = x; 
 }
 
 void Items::pickUp(Items* item)
@@ -108,7 +108,7 @@ Items::Items(int r, int inv, int id, std::string name,bool pickup,int x, int y, 
    m_invslot = inv;
    m_itemID = id;
    m_name = name;
-   m_ammount = 1;
+   m_amount = 1;
    m_pickedUp = pickup;
    m_x = x;
    m_y = y;
