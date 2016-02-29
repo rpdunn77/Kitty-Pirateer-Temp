@@ -7,11 +7,13 @@
 #include <math.h>
 #include <time.h>
 #include <GL/freeglut.h>
+#include <string>
+#include <iostream>
 
 
 #include "../hdr/Player.h"
 #include "../hdr/ItemHandler.h"
-
+#include "../hdr/MapHandler.h"
 #include "../hdr/ImageLoader.h"
 
 bool Game::c_running = false;
@@ -91,15 +93,7 @@ void Game::keyOperations()
 
 void Game::keyUp(unsigned char key, int x, int y)
 {
-   //if(keystates['j'])
-      //Game::getInstance().m_myPlayer.attack();
-   if (key == 'j')
-      Game::getInstance().m_myPlayer.attack();
-   
    keystates[key] = false;
-   
-   
-
 }
 
 void Game::key(unsigned char key, int x, int y)
@@ -110,6 +104,10 @@ void Game::key(unsigned char key, int x, int y)
       Game::c_running = !Game::c_running;
    if (key == 'u')
       ItemHandler::getInstance().iSwitch();
+   if (key == 'j')
+      Game::getInstance().m_myPlayer.attack();
+   if (key == 'k')
+      ItemHandler::getInstance().iUse();
  
 }
 
@@ -154,6 +152,17 @@ void Game::changeScreen(int dir)
 
 void Game::update()
 {
+  int now;
+  int miliseconds;
+  now = glutGet(GLUT_ELAPSED_TIME);
+  
+  miliseconds =  now - m_lastSong;
+  if (miliseconds > 32600){
+     Jukebox::PlaySound("./sounds/Song.wav");
+     m_lastSong = glutGet(GLUT_ELAPSED_TIME);
+  } 
+   
+   
    Game::getInstance().keyOperations();
    // Clear color and depth buffers
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
@@ -174,14 +183,37 @@ void Game::update()
    glDisable(GL_TEXTURE_2D);
    glFlush();
    
+   //********I ADDED THIS*********//
+   std::string item = "Item: ";
+   std::string ammount = "Amount: ";
+   int num;
+
+   item += ItemHandler::getInstance().getItem()->getName();
+   num =ItemHandler::getInstance().getItem()->getAmmount();
+   ammount += std::to_string(num);
+   //std::cout << item << ammount << std::endl;
+   const char* citem = item.c_str();
+   const char* cammount = ammount.c_str();
+      
+    
+   ImageLoader::RenderString(25, m_height - 20, GLUT_BITMAP_TIMES_ROMAN_24, citem);
+   ImageLoader::RenderString(25, m_height - 40, GLUT_BITMAP_TIMES_ROMAN_24, cammount);
+   
+   std::string health = "Health: ";
+   int numHealth = Game::getInstance().m_myPlayer.getHealth();
+   health += std::to_string(numHealth);
+   
+   const char* chealth = health.c_str();
+   ImageLoader::RenderString(100, m_height - 20, GLUT_BITMAP_TIMES_ROMAN_24, citem);
+   
+   //*****************************//
+   
    if(!Game::c_running)
    {
       return splashScreen();
    }
 
-   m_myPlayer.update(m_myGameObjects3,3,4);
-     
-   m_myPlayer.update(m_myGameObjects4,1,3);
+  
    ItemHandler::getInstance().update();
    m_myPlayer.display();
 }
@@ -205,7 +237,7 @@ void Game::init() {
     srandom(time(NULL));
 
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB); // Use double buffering for smoother images
-    glutInitWindowSize(m_width, m_height);
+    glutInitWindowSize(m_width+200, m_height);
     glutInitWindowPosition(0, 0);
     glutCreateWindow("Kitty Piratier - Adventure of Zombie Island");
 
@@ -221,7 +253,7 @@ void Game::init() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-
+/*
     m_gameObjects = 0;                            //x   y   len  bre
     m_myGameObjects3[m_gameObjects] = new Obstacle(170, 210, 154 , 150, 0); //square
                                                     //x   y    r   circleflag  cond
@@ -232,7 +264,7 @@ void Game::init() {
     m_gameObjects = m_gameObjects+1;
     m_myGameObjects3[m_gameObjects] = new Obstacle( 650, 222, 151, 147,0);
 
-    
+ */   
 
     //gluOrtho2D(0, m_width+m_margine, 0, m_height+m_margine);
     glOrtho(0, m_width+m_margine, 0, m_height+m_margine, 0, 1000);

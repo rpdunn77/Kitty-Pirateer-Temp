@@ -15,19 +15,39 @@
 #include "../hdr/MapHandler.h"
 #include <string.h>
 #include "../hdr/ObjectFactory.h"
+/*
+GLuint MapHandler::getTile(int n)
+{
+	switch(n) {
+		case 0: return m_tileTextureArray0;
+		case 1: return m_tileTextureArray1;
+		case 2: return m_tileTextureArray2;
+		case 3: return m_tileTextureArray3;
+		case 4: return m_tileTextureArray4;
+		case 5: return m_tileTextureArray5;
+		case 6: return m_tileTextureArray6;
+		case 7: return m_tileTextureArray7;
+		case 8: return m_tileTextureArray8;
+	}
+}
 
+		
+	
+	
+	
+	
 
-
-MapHandler::MapHandler(int n)
+MapHandler::MapHandler()
 {
    //sets value for the current tile
-   int m_currTile = n;
+ 
 
    //loads all the tile images into textures
+   /*
    for(int i=0; i<NUMTILES ;i++)
    {
       char filename[20];
-      const char * tile = "tile";
+      const char * tile = "./imgs/tile";
       const char * extpng = ".png";
       strcpy (filename,tile);
       
@@ -43,7 +63,16 @@ MapHandler::MapHandler(int n)
          );
 
    }
-
+  
+	m_tileTextureArray0 = ImageLoader::LoadTexture("./imgs/tile0.png");
+	m_tileTextureArray1 = ImageLoader::LoadTexture("./imgs/tile1.png");
+	m_tileTextureArray2 = ImageLoader::LoadTexture("./imgs/tile2.png");
+	m_tileTextureArray3 = ImageLoader::LoadTexture("./imgs/tile3.png");
+	m_tileTextureArray4 = ImageLoader::LoadTexture("./imgs/tile4.png");
+	m_tileTextureArray5 = ImageLoader::LoadTexture("./imgs/tile5.png");
+	m_tileTextureArray6 = ImageLoader::LoadTexture("./imgs/tile6.png");
+	m_tileTextureArray7 = ImageLoader::LoadTexture("./imgs/tile7.png");
+	m_tileTextureArray8 = ImageLoader::LoadTexture("./imgs/tile8.png");
 
 
    // Allocate memory for array to hold obstacle values 3D array 
@@ -292,7 +321,7 @@ MapHandler::MapHandler(int n)
       m_obs3DArray[8][22]= new double[ATTRIBUTES] = {2,156,288,135,0};
       m_obs3DArray[8][23]= new double[ATTRIBUTES] = {776,4,58,33,0};
       m_obs3DArray[8][24]= new double[ATTRIBUTES] = {958,5,86,33,0};
-	*/
+	
    
 
    for(int i=0;i<m_numObs[m_currTile];i++)
@@ -309,7 +338,7 @@ MapHandler::MapHandler(int n)
    }
 
 }
-
+*/
 //***********************************************************//
 
 void MapHandler::updateTile(int x)

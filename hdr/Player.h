@@ -18,6 +18,7 @@ class Player {
     int m_stepSize;
     int m_lastAttack;
     int m_lastStep;
+    int m_health;
     
     
     bool stopup,stopdown,stopright,stopleft;
@@ -34,11 +35,13 @@ class Player {
     void honk ();
     void display ();
     void displayTexture ();
-    void update (Obstacle *obstacle[],int size, int quad);
-    void collisions(int xpos, int ypos, int width, int height, int cond, int quad);
+    void update ();
+    void collisions(int xpos, int ypos, int width, int height, int cond);
     void init();
+    void addHealth(int x);
     int getX(){return m_x;}
     int getY(){return m_y;}
+    int getHealth(){return m_health;}
     int getWidth(){return m_size;}
     int getHeight(){return m_size;}
     int getSize(){return m_size;}

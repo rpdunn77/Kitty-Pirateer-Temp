@@ -9,6 +9,7 @@
 
 #include "../hdr/ImageLoader.h" 
 #include "../hdr/Game.h"
+#include "../hdr/MapHandler.h"
 
 class ImageLoader;
 
@@ -162,101 +163,81 @@ void Player::displayTexture ()
    glFlush();
 
 }
-void Player::update (Obstacle *ob[],int size,int quad)
+void Player::update ()
 {
+   int size = MapHandler::getInstance().getNumObstacles();
+   Obstacle* ob;
+   ob = MapHandler::getInstance().getObstacles();
+  
    for(int i=0;i<size;i++){
-      int xpos = ob[i]->getX();
-      int ypos = ob[i]->getY();
-      int width = ob[i]->getW();
-      int height = ob[i]->getH();
-      int cond = ob[i]->getC();
+      int xpos = ob[i].getX();
+      int ypos = ob[i].getY();
+      int width = ob[i].getW();
+      int height = ob[i].getH();
+      int cond = ob[i].getC();
 
-      collisions(xpos, ypos, width, height, cond,quad);
+      collisions(xpos, ypos, width, height, cond);
       if(stopright == true || stopleft == true||stopup==true||stopdown==true)
       	break;   
    }
 }
 
-void Player::collisions(int xpos, int ypos, int width, int height, int cond,int quad)
+void Player::collisions(int xpos, int ypos, int width, int height, int cond)
 {
-	int quadrant = Game::getInstance().getArrayPos();
-	if(quadrant == quad && height > 0){
-      if(m_x+m_stepSize+m_size > xpos && m_x < xpos + width && m_y+m_size > ypos && m_y < ypos+height){
-         stopright = true;
-         m_x -=m_stepSize;
-      }else if(m_x+m_size > xpos && m_x-m_stepSize < xpos + width && m_y+m_size > ypos && m_y < ypos+height){
-         stopleft = true;
-         m_x+=m_stepSize;
-      }else if(m_y-m_stepSize < ypos+height  && m_y > ypos && m_x +m_size > xpos && m_x < xpos+width){
-         stopdown = true;
-         m_y+=m_stepSize;
-      }else if(m_y+m_size+m_stepSize> ypos && m_y < ypos+height && m_x+m_size > xpos && m_x < xpos+width){
-         stopup = true;
-         m_y-=m_stepSize;
-      }else{
-         stopright = false;
-         stopleft = false;
-         stopup = false;
-         stopdown = false;
+
+   if(m_x+m_size > xpos && m_x < xpos + width && m_y+m_size > ypos && m_y < ypos+height){
+	   if(cond == 0){   
+	      if(c_up){
+      	   m_y -=m_stepSize;
+         }
+         if(c_right){
+      	   m_x -=m_stepSize;
+         }
+         if(c_down){
+      	   m_y +=m_stepSize;
+         }
+         if(c_left){
+      	   m_x +=m_stepSize;
+         }
+      }else if(cond == 1){
+         m_speed = 0.5;
       }
-	}else if(quadrant == quad && height == 0){
-		float circledistancex = abs(xpos - (m_x + (m_size/2)));
-		float circledistancey = abs(ypos - (m_y + (m_size/2)));
-		float corner = pow((circledistancex - m_size/2),2) +
-							pow((circledistancey - m_size/2),2);
-		if(circledistancex > (m_size/2 + width)){	
-			m_speed = 1;
-		}else if(circledistancey > (m_size/2 + width)){	
-			m_speed = 1;
-		}else if(circledistancex <= (m_size/2)){
-      	//m_speed = 0.5;
-      	if(c_up){
-      		m_y -=m_stepSize;
-      	}
-      	if(c_right){
-      		m_x -=m_stepSize;
-      	}
-      	if(c_down){
-      		m_y +=m_stepSize;
-      	}
-      	if(c_left){
-      		m_x +=m_stepSize;
-      	}
-		}else if(circledistancey <= (m_size/2)){
-			//m_speed = 0.5;
-			if(c_up){
-      		m_y -=m_stepSize;
-      	}
-      	if(c_right){
-      		m_x -=m_stepSize;
-      	}
-      	if(c_down){
-      		m_y +=m_stepSize;
-      	}
-      	if(c_left){
-      		m_x +=m_stepSize;
-      	}
-		}else if(corner <=pow(width,2)){
-			//m_speed = 0.5;
-      	if(c_up){
-      		m_y -=m_stepSize;
-      	}
-      	if(c_right){
-      		m_x -=m_stepSize;
-      	}
-      	if(c_down){
-      		m_y +=m_stepSize;
-      	}
-      	if(c_left){
-      		m_x +=m_stepSize;
-      	}
-		}
+	}else{
+	   m_speed = 1;
 	}
+	
+   if(m_x+m_stepSize+m_size > xpos && m_x < xpos + width
+      && m_y+m_size > ypos && m_y < ypos+height){
+      stopright = true;
+      m_x -=m_stepSize;
+   }else if(m_x+m_size > xpos && m_x-m_stepSize < xpos + width
+      && m_y+m_size > ypos && m_y < ypos+height){
+      stopleft = true;
+      m_x+=m_stepSize;
+   }else if(m_y-m_stepSize < ypos+height  && m_y > ypos
+      && m_x +m_size > xpos && m_x < xpos+width){
+      stopdown = true;
+      m_y+=m_stepSize;
+   }else if(m_y+m_size+m_stepSize> ypos && m_y < ypos+height
+      && m_x+m_size > xpos && m_x < xpos+width){
+      stopup = true;
+      m_y-=m_stepSize;
+   }else{
+      stopright = false;
+      stopleft = false;
+      stopup = false;
+      stopdown = false;
+   }
 }
 
 void Player::init()
 {
   m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/CatUpB.png" );
+}
+
+void Player::addHealth(int x)
+{
+   m_health += x;
 }
 
 
@@ -277,6 +258,7 @@ Player::Player(int x, int y)
    stopleft=false;
    stopup=false;
    stopdown=false;
+   m_health =100;
    m_lastAttack = glutGet(GLUT_ELAPSED_TIME);
    m_lastStep = glutGet(GLUT_ELAPSED_TIME);
 }

@@ -9,11 +9,22 @@
 
 #include "../hdr/ImageLoader.h" 
 #include "../hdr/Game.h"
+#include "../hdr/MapHandler.h"
 
 class ImageLoader;
 
 void Player::left ()
 {
+  int now;
+  int seconds;
+  now = glutGet(GLUT_ELAPSED_TIME);
+  
+  seconds =  now - m_lastStep;
+  if (seconds > 400){
+   Jukebox::PlaySound("./sounds/Step.wav");
+     m_lastStep = glutGet(GLUT_ELAPSED_TIME);
+  }   
+
    if(!stopleft){
       m_arraypos = Game::getInstance().getArrayPos();
     
@@ -30,10 +41,19 @@ void Player::left ()
    	}
    }
    m_direction = 3;
-   m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/Left.bmp" );
+   m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/CatLeftB.png" );
 }
 void Player::right ()
 {
+  int now;
+  int seconds;
+  now = glutGet(GLUT_ELAPSED_TIME);
+  
+  seconds =  now - m_lastStep;
+  if (seconds > 400){
+   Jukebox::PlaySound("./sounds/Step.wav");
+     m_lastStep = glutGet(GLUT_ELAPSED_TIME);
+  }
    if(!stopright){
       m_arraypos = Game::getInstance().getArrayPos();
 
@@ -50,10 +70,19 @@ void Player::right ()
    	}
    }
    m_direction = 1;
-   m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/Right.bmp" );
+   m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/CatRightB.png" );
 }
 void Player::up ()
 {
+  int now;
+  int seconds;
+  now = glutGet(GLUT_ELAPSED_TIME);
+  
+  seconds =  now - m_lastStep;
+  if (seconds > 400){
+   Jukebox::PlaySound("./sounds/Step.wav");
+     m_lastStep = glutGet(GLUT_ELAPSED_TIME);
+  }
    if(!stopup){
       m_arraypos = Game::getInstance().getArrayPos();
 
@@ -70,10 +99,19 @@ void Player::up ()
 		}
    }
    m_direction = 0;
-	m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/Up.bmp" );
+	m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/CatUpB.png" );
 }
 void Player::down ()
 {
+  int now;
+  int seconds;
+  now = glutGet(GLUT_ELAPSED_TIME);
+  
+  seconds =  now - m_lastStep;
+  if (seconds > 400){
+   Jukebox::PlaySound("./sounds/Step.wav");
+     m_lastStep = glutGet(GLUT_ELAPSED_TIME);
+  }
    if(!stopdown){
       m_arraypos = Game::getInstance().getArrayPos();
 
@@ -90,11 +128,10 @@ void Player::down ()
   		}
    }
 	m_direction = 2;
-  	m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/Down.bmp" );
+  	m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/CatDownB.png" );
 }
 void Player::attack ()
 {
-  //Game::getInstance().changeScreen(1);
   int now;
   int seconds;
   now = glutGet(GLUT_ELAPSED_TIME);
@@ -103,9 +140,7 @@ void Player::attack ()
   if (seconds > 100){
      ItemHandler::getInstance().getWeapon()->attack();
      m_lastAttack = glutGet(GLUT_ELAPSED_TIME);
-  } 
- // std::cout << "now: " << now << " last attack: " << m_lastAttack << " seconds: " << seconds << std::endl;  
-  
+  }   
 }
 void Player::honk ()
 {
@@ -128,25 +163,51 @@ void Player::displayTexture ()
    glFlush();
 
 }
-void Player::update (Obstacle *ob[],int size,int quad)
+void Player::update ()
 {
+   int size = MapHandler::getInstance().getNumObstacles();
+   Obstacle* ob;
+   ob = MapHandler::getInstance().getObstacles();
+  
    for(int i=0;i<size;i++){
-      int xpos = ob[i]->getX();
-      int ypos = ob[i]->getY();
-      int width = ob[i]->getW();
-      int height = ob[i]->getH();
-      int cond = ob[i]->getC();
+      int xpos = ob[i].getX();
+      int ypos = ob[i].getY();
+      int width = ob[i].getW();
+      int height = ob[i].getH();
+      int cond = ob[i].getC();
 
-      collisions(xpos, ypos, width, height, cond,quad);
+      collisions(xpos, ypos, width, height, cond);
       if(stopright == true || stopleft == true||stopup==true||stopdown==true)
       	break;   
    }
 }
 
-void Player::collisions(int xpos, int ypos, int width, int height, int cond,int quad)
+void Player::collisions(int xpos, int ypos, int width, int height, int cond)
 {
-	int quadrant = Game::getInstance().getArrayPos();
-	if(quadrant == quad && height > 0){
+	//int quadrant = Game::getInstance().getArrayPos();
+	//if(quadrant == quad && height > 0){
+	
+   if(m_x+m_size > xpos && m_x < xpos + width && m_y+m_size > ypos && m_y < ypos+height){
+	   if(cond == 0){   
+	      if(c_up){
+      	   m_y -=m_stepSize;
+         }
+         if(c_right){
+      	   m_x -=m_stepSize;
+         }
+         if(c_down){
+      	   m_y +=m_stepSize;
+         }
+         if(c_left){
+      	   m_x +=m_stepSize;
+         }
+      }else if(cond == 1){
+         m_speed = 0.5;
+      }
+	}else{
+	   m_speed = 1;
+	}
+	/*
       if(m_x+m_stepSize+m_size > xpos && m_x < xpos + width && m_y+m_size > ypos && m_y < ypos+height){
          stopright = true;
          m_x -=m_stepSize;
@@ -165,7 +226,7 @@ void Player::collisions(int xpos, int ypos, int width, int height, int cond,int 
          stopup = false;
          stopdown = false;
       }
-	}else if(quadrant == quad && height == 0){
+	//}else if(quadrant == quad && height == 0){
 		float circledistancex = abs(xpos - (m_x + (m_size/2)));
 		float circledistancey = abs(ypos - (m_y + (m_size/2)));
 		float corner = pow((circledistancex - m_size/2),2) +
@@ -217,12 +278,17 @@ void Player::collisions(int xpos, int ypos, int width, int height, int cond,int 
       		m_x +=m_stepSize;
       	}
 		}
-	}
+	//}*/
 }
 
 void Player::init()
 {
-  m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/Up.bmp" );
+  m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/CatUpB.png" );
+}
+
+void Player::addHealth(int x)
+{
+   m_health += x;
 }
 
 
@@ -237,12 +303,14 @@ Player::Player(int x, int y)
    m_direction = 2;
    m_arraypos = 0;
    m_speed = 1;
-   m_size = 45;
+   m_size = 40;
    m_stepSize = 4;
    stopright=false;
    stopleft=false;
    stopup=false;
    stopdown=false;
+   m_health =100;
    m_lastAttack = glutGet(GLUT_ELAPSED_TIME);
+   m_lastStep = glutGet(GLUT_ELAPSED_TIME);
 }
 

@@ -7,11 +7,13 @@
 #include <math.h>
 #include <time.h>
 #include <GL/freeglut.h>
+#include <string>
+#include <iostream>
 
 
 #include "../hdr/Player.h"
 #include "../hdr/ItemHandler.h"
-
+#include "../hdr/MapHandler.h"
 #include "../hdr/ImageLoader.h"
 
 bool Game::c_running = false;
@@ -104,6 +106,8 @@ void Game::key(unsigned char key, int x, int y)
       ItemHandler::getInstance().iSwitch();
    if (key == 'j')
       Game::getInstance().m_myPlayer.attack();
+   if (key == 'k')
+      ItemHandler::getInstance().iUse();
  
 }
 
@@ -139,8 +143,9 @@ void Game::splashScreen()
 void Game::changeScreen(int dir)
 {
 
-	const char* tiles[9] =  {"./imgs/tile0.png","./imgs/tile1.png","./imgs/tile2.png","./imgs/tile3.png","./imgs/tile4.png","./imgs/tile5.png","./imgs/tile6.png","./imgs/tile7.png","./imgs/tile8.png"};
-	m_backgroundTexture= ImageLoader::LoadTexture(tiles[dir]);
+	//const char* tiles[9] =  {"./imgs/tile0.png","./imgs/tile1.png","./imgs/tile2.png","./imgs/tile3.png","./imgs/tile4.png","./imgs/tile5.png","./imgs/tile6.png","./imgs/tile7.png","./imgs/tile8.png"};
+	//m_backgroundTexture= ImageLoader::LoadTexture(tiles[dir]);
+	m_backgroundTexture = MapHandler::getInstance().getTile(dir);
 	
 
 }
@@ -153,10 +158,11 @@ void Game::update()
   now = glutGet(GLUT_ELAPSED_TIME);
   
   miliseconds =  now - m_lastSong;
-  if (miliseconds > 40000){
+  if (miliseconds > 32600){
      Jukebox::PlaySound("./sounds/Song.wav");
      m_lastSong = glutGet(GLUT_ELAPSED_TIME);
   } 
+   
    
    Game::getInstance().keyOperations();
    // Clear color and depth buffers
@@ -178,14 +184,37 @@ void Game::update()
    glDisable(GL_TEXTURE_2D);
    glFlush();
    
+   //********I ADDED THIS*********//
+   std::string item = "Item: ";
+   std::string ammount = "Amount: ";
+   int num;
+
+   item += ItemHandler::getInstance().getItem()->getName();
+   num =ItemHandler::getInstance().getItem()->getAmmount();
+   ammount += std::to_string(num);
+   //std::cout << item << ammount << std::endl;
+   const char* citem = item.c_str();
+   const char* cammount = ammount.c_str();
+      
+    
+   ImageLoader::RenderString(25, m_height - 20, GLUT_BITMAP_TIMES_ROMAN_24, citem);
+   ImageLoader::RenderString(25, m_height - 40, GLUT_BITMAP_TIMES_ROMAN_24, cammount);
+   
+   std::string health = "Health: ";
+   int numHealth = Game::getInstance().m_myPlayer.getHealth();
+   health += std::to_string(numHealth);
+   
+   const char* chealth = health.c_str();
+   ImageLoader::RenderString(200, m_height - 20, GLUT_BITMAP_TIMES_ROMAN_24, chealth);
+   
+   //*****************************//
+   
    if(!Game::c_running)
    {
       return splashScreen();
    }
 
-   //m_myPlayer.update(m_myGameObjects3,3,4);
-     
-   //m_myPlayer.update(m_myGameObjects4,1,3);
+  
    ItemHandler::getInstance().update();
    m_myPlayer.display();
 }
@@ -209,7 +238,7 @@ void Game::init() {
     srandom(time(NULL));
 
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB); // Use double buffering for smoother images
-    glutInitWindowSize(m_width, m_height);
+    glutInitWindowSize(m_width+200, m_height);
     glutInitWindowPosition(0, 0);
     glutCreateWindow("Kitty Piratier - Adventure of Zombie Island");
 
@@ -257,7 +286,8 @@ void Game::init() {
     //glutIdleFunc(Game::run);    // Wait time between frames.
 
 
-   m_backgroundTexture= ImageLoader::LoadTexture( "./imgs/tile3.png" );
+   //m_backgroundTexture= ImageLoader::LoadTexture( "./imgs/tile3.png" );
+   m_backgroundTexture = MapHandler::getInstance().getTile(3);
    m_myPlayer.init();
 
     glutMainLoop(); // glutMainLoop enters the GLUT event processing loop. 

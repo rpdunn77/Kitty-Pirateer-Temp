@@ -51,20 +51,22 @@ void Items::pickUp(Items* item)
          switch (m_itemID){
             case 10://add item to inventory
                ItemHandler::getInstance().addItemToInv(item);
-               Jukebox::PlaySound("./sounds/LemonPickUp.wav");
+               Jukebox::PlaySound("./sounds/ItemPickUp.wav");
                break;
             case 11://heal Player
                //need a healPlayer(int x) which will add x to Player health
                
                //REMOVEComments
+               Game::getInstance().m_myPlayer.addHealth(10);               
                //Player::getInstance().addHealth(10);
                Jukebox::PlaySound("./sounds/HeartPickUp.wav");               
                //std::cout << "health Increased:10" << std::endl;   
                break;
             case 12:
                //Player::getInstance().addHealth(20);
-               Jukebox::PlaySound("./sounds/HealthPotionPickUp.wav");
-               //std::cout << "health Increased: 20" << std::endl;      
+               Jukebox::PlaySound("./sounds/ItemPickUp.wav");
+               //std::cout << "health Increased: 20" << std::endl;
+               ItemHandler::getInstance().addItemToInv(item);      
                break;            
       
          }

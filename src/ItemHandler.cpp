@@ -7,6 +7,8 @@
 
 #include "../hdr/ItemHandler.h"
 #include "../hdr/Items.h"
+#include "../hdr/Jukebox.h"
+#include "../hdr/Game.h"
 
 /*
 #include "../hdr/ItemHandler.h"
@@ -50,9 +52,9 @@ void ItemHandler::iSwitch()
    }
  
  //  FOR TESTING
-   std::string name = m_itemInv[m_currItem]->getName();
-   int ammount = m_itemInv[m_currItem]->getAmmount();
-   std::cout << name << ": " << ammount << std::endl;
+   //std::string name = m_itemInv[m_currItem]->getName();
+   //int ammount = m_itemInv[m_currItem]->getAmmount();
+   //std::cout << name << ": " << ammount << std::endl;
 
 }
 
@@ -66,7 +68,20 @@ void ItemHandler::wSwitch()
 }
 
 void ItemHandler::iUse()
-{
+{  int id = getItem()->getItemID();
+
+   switch (id){
+      case 12:
+         if(getItem()->getAmmount() > 0){
+            Jukebox::PlaySound("./sounds/HealthPotionUse.wav");
+            //std::cout << "health: + 20" << std::endl;
+            //Player::getInstance().addHealth(20);
+            Game::getInstance().m_myPlayer.addHealth(20);
+            getItem()->decreaseAmmount();
+         }
+         break;
+   }
+   
    
 }
 

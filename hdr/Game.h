@@ -60,6 +60,7 @@ class Game {
       int m_arraypos;
       int m_gameObjects;
       int m_lastSong;
+      
       GLuint m_backgroundTexture;
       Obstacle *m_myGameObjects3[10];
 
