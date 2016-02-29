@@ -51,19 +51,19 @@ void Items::pickUp(Items* item)
          switch (m_itemID){
             case 10://add item to inventory
                ItemHandler::getInstance().addItemToInv(item);
-               //Jukebox::PlaySound("./sounds/LemonPickUp.wav");
+               Jukebox::PlaySound("./sounds/LemonPickUp.wav");
                break;
             case 11://heal Player
                //need a healPlayer(int x) which will add x to Player health
                
                //REMOVEComments
                //Player::getInstance().addHealth(10);
-               //Jukebox::PlaySound("./sounds/HeartPickUp.wav");               
+               Jukebox::PlaySound("./sounds/HeartPickUp.wav");               
                //std::cout << "health Increased:10" << std::endl;   
                break;
             case 12:
                //Player::getInstance().addHealth(20);
-               //Jukebox::PlaySound("./sounds/HealthPotionPickUp.wav");
+               Jukebox::PlaySound("./sounds/HealthPotionPickUp.wav");
                //std::cout << "health Increased: 20" << std::endl;      
                break;            
       
@@ -111,7 +111,7 @@ Items::Items(int r, int inv, int id, std::string name,bool pickup,int x, int y, 
    m_x = x;
    m_y = y;
    m_tilePos = tile;
-   m_itemWidth = 30;
+   m_itemWidth = 20;
 
    //switchcase
    switch (m_itemID){

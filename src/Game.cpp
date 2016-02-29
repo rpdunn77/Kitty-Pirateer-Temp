@@ -148,6 +148,16 @@ void Game::changeScreen(int dir)
 
 void Game::update()
 {
+  int now;
+  int miliseconds;
+  now = glutGet(GLUT_ELAPSED_TIME);
+  
+  miliseconds =  now - m_lastSong;
+  if (miliseconds > 40000){
+     Jukebox::PlaySound("./sounds/Song.wav");
+     m_lastSong = glutGet(GLUT_ELAPSED_TIME);
+  } 
+   
    Game::getInstance().keyOperations();
    // Clear color and depth buffers
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 

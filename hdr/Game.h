@@ -10,6 +10,7 @@
 
 #include "Player.h"
 #include "ItemHandler.h"
+#include "Jukebox.h"
 
 
 class Player;
@@ -37,6 +38,8 @@ class Game {
            m_width = 1055;
            m_height = 1055;
            m_arraypos = 3;
+           m_lastSong = glutGet(GLUT_ELAPSED_TIME);
+           Jukebox::PlaySound("./sounds/Song.wav");
         }; // Default Constructor (the {} brackets) are needed here, even if it is empty
         
            
@@ -56,6 +59,7 @@ class Game {
 
       int m_arraypos;
       int m_gameObjects;
+      int m_lastSong;
       GLuint m_backgroundTexture;
       Obstacle *m_myGameObjects3[10];
 

@@ -17,6 +17,7 @@ class Player {
     float m_speed;
     int m_stepSize;
     int m_lastAttack;
+    int m_lastStep;
     
     
     bool stopup,stopdown,stopright,stopleft;

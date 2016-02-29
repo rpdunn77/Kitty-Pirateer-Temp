@@ -14,6 +14,16 @@ class ImageLoader;
 
 void Player::left ()
 {
+  int now;
+  int seconds;
+  now = glutGet(GLUT_ELAPSED_TIME);
+  
+  seconds =  now - m_lastStep;
+  if (seconds > 400){
+   Jukebox::PlaySound("./sounds/Step.wav");
+     m_lastStep = glutGet(GLUT_ELAPSED_TIME);
+  }   
+
    if(!stopleft){
       m_arraypos = Game::getInstance().getArrayPos();
     
@@ -34,6 +44,15 @@ void Player::left ()
 }
 void Player::right ()
 {
+  int now;
+  int seconds;
+  now = glutGet(GLUT_ELAPSED_TIME);
+  
+  seconds =  now - m_lastStep;
+  if (seconds > 400){
+   Jukebox::PlaySound("./sounds/Step.wav");
+     m_lastStep = glutGet(GLUT_ELAPSED_TIME);
+  }
    if(!stopright){
       m_arraypos = Game::getInstance().getArrayPos();
 
@@ -54,6 +73,15 @@ void Player::right ()
 }
 void Player::up ()
 {
+  int now;
+  int seconds;
+  now = glutGet(GLUT_ELAPSED_TIME);
+  
+  seconds =  now - m_lastStep;
+  if (seconds > 400){
+   Jukebox::PlaySound("./sounds/Step.wav");
+     m_lastStep = glutGet(GLUT_ELAPSED_TIME);
+  }
    if(!stopup){
       m_arraypos = Game::getInstance().getArrayPos();
 
@@ -74,6 +102,15 @@ void Player::up ()
 }
 void Player::down ()
 {
+  int now;
+  int seconds;
+  now = glutGet(GLUT_ELAPSED_TIME);
+  
+  seconds =  now - m_lastStep;
+  if (seconds > 400){
+   Jukebox::PlaySound("./sounds/Step.wav");
+     m_lastStep = glutGet(GLUT_ELAPSED_TIME);
+  }
    if(!stopdown){
       m_arraypos = Game::getInstance().getArrayPos();
 
@@ -234,12 +271,13 @@ Player::Player(int x, int y)
    m_direction = 2;
    m_arraypos = 0;
    m_speed = 1;
-   m_size = 45;
+   m_size = 30;
    m_stepSize = 4;
    stopright=false;
    stopleft=false;
    stopup=false;
    stopdown=false;
    m_lastAttack = glutGet(GLUT_ELAPSED_TIME);
+   m_lastStep = glutGet(GLUT_ELAPSED_TIME);
 }
 
