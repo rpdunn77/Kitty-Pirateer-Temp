@@ -184,9 +184,7 @@ void Player::update ()
 
 void Player::collisions(int xpos, int ypos, int width, int height, int cond)
 {
-	//int quadrant = Game::getInstance().getArrayPos();
-	//if(quadrant == quad && height > 0){
-	
+
    if(m_x+m_size > xpos && m_x < xpos + width && m_y+m_size > ypos && m_y < ypos+height){
 	   if(cond == 0){   
 	      if(c_up){
@@ -207,78 +205,29 @@ void Player::collisions(int xpos, int ypos, int width, int height, int cond)
 	}else{
 	   m_speed = 1;
 	}
-	/*
-      if(m_x+m_stepSize+m_size > xpos && m_x < xpos + width && m_y+m_size > ypos && m_y < ypos+height){
-         stopright = true;
-         m_x -=m_stepSize;
-      }else if(m_x+m_size > xpos && m_x-m_stepSize < xpos + width && m_y+m_size > ypos && m_y < ypos+height){
-         stopleft = true;
-         m_x+=m_stepSize;
-      }else if(m_y-m_stepSize < ypos+height  && m_y > ypos && m_x +m_size > xpos && m_x < xpos+width){
-         stopdown = true;
-         m_y+=m_stepSize;
-      }else if(m_y+m_size+m_stepSize> ypos && m_y < ypos+height && m_x+m_size > xpos && m_x < xpos+width){
-         stopup = true;
-         m_y-=m_stepSize;
-      }else{
-         stopright = false;
-         stopleft = false;
-         stopup = false;
-         stopdown = false;
-      }
-	//}else if(quadrant == quad && height == 0){
-		float circledistancex = abs(xpos - (m_x + (m_size/2)));
-		float circledistancey = abs(ypos - (m_y + (m_size/2)));
-		float corner = pow((circledistancex - m_size/2),2) +
-							pow((circledistancey - m_size/2),2);
-		if(circledistancex > (m_size/2 + width)){	
-			m_speed = 1;
-		}else if(circledistancey > (m_size/2 + width)){	
-			m_speed = 1;
-		}else if(circledistancex <= (m_size/2)){
-      	//m_speed = 0.5;
-      	if(c_up){
-      		m_y -=m_stepSize;
-      	}
-      	if(c_right){
-      		m_x -=m_stepSize;
-      	}
-      	if(c_down){
-      		m_y +=m_stepSize;
-      	}
-      	if(c_left){
-      		m_x +=m_stepSize;
-      	}
-		}else if(circledistancey <= (m_size/2)){
-			//m_speed = 0.5;
-			if(c_up){
-      		m_y -=m_stepSize;
-      	}
-      	if(c_right){
-      		m_x -=m_stepSize;
-      	}
-      	if(c_down){
-      		m_y +=m_stepSize;
-      	}
-      	if(c_left){
-      		m_x +=m_stepSize;
-      	}
-		}else if(corner <=pow(width,2)){
-			//m_speed = 0.5;
-      	if(c_up){
-      		m_y -=m_stepSize;
-      	}
-      	if(c_right){
-      		m_x -=m_stepSize;
-      	}
-      	if(c_down){
-      		m_y +=m_stepSize;
-      	}
-      	if(c_left){
-      		m_x +=m_stepSize;
-      	}
-		}
-	//}*/
+	
+   if(m_x+m_stepSize+m_size > xpos && m_x < xpos + width
+      && m_y+m_size > ypos && m_y < ypos+height){
+      stopright = true;
+      m_x -=m_stepSize;
+   }else if(m_x+m_size > xpos && m_x-m_stepSize < xpos + width
+      && m_y+m_size > ypos && m_y < ypos+height){
+      stopleft = true;
+      m_x+=m_stepSize;
+   }else if(m_y-m_stepSize < ypos+height  && m_y > ypos
+      && m_x +m_size > xpos && m_x < xpos+width){
+      stopdown = true;
+      m_y+=m_stepSize;
+   }else if(m_y+m_size+m_stepSize> ypos && m_y < ypos+height
+      && m_x+m_size > xpos && m_x < xpos+width){
+      stopup = true;
+      m_y-=m_stepSize;
+   }else{
+      stopright = false;
+      stopleft = false;
+      stopup = false;
+      stopdown = false;
+   }
 }
 
 void Player::init()

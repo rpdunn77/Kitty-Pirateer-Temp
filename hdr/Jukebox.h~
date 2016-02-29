@@ -16,7 +16,7 @@ class Jukebox {
      static bool init();
      // Play a sound.
      static void PlaySound(const char *file);
-     static void StopSound();
+     static void StopAudio();
 };
 
 #endif /* Jukebox_H_ */

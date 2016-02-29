@@ -39,7 +39,7 @@ class Game {
            m_height = 1055;
            m_arraypos = 3;
            m_lastSong = glutGet(GLUT_ELAPSED_TIME);
-           Jukebox::PlaySound("./sounds/Song.wav");
+           //Jukebox::PlaySound("./sounds/Song.wav");
         }; // Default Constructor (the {} brackets) are needed here, even if it is empty
         
            
@@ -60,6 +60,7 @@ class Game {
       int m_arraypos;
       int m_gameObjects;
       int m_lastSong;
+      bool m_firstLoad;
       
       GLuint m_backgroundTexture;
       Obstacle *m_myGameObjects3[10];
@@ -75,6 +76,7 @@ class Game {
       // Functions for GL. key handles keyboard input. Run is the comuting loop
       // Run calls update
       static bool c_running;
+      static bool c_firstLoad;
       static bool* keystates;
       static void keyUp(unsigned char key, int x, int y);
       static void key(unsigned char key, int x, int y);

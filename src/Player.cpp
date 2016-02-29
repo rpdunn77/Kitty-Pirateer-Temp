@@ -253,7 +253,7 @@ Player::Player(int x, int y)
    m_arraypos = 0;
    m_speed = 1;
    m_size = 40;
-   m_stepSize = 4;
+   m_stepSize = 2;
    stopright=false;
    stopleft=false;
    stopup=false;

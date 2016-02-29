@@ -17,6 +17,7 @@
 #include "../hdr/ImageLoader.h"
 
 bool Game::c_running = false;
+bool Game::c_firstLoad = true;
 bool* Game::keystates = new bool[256];
 
 
@@ -100,8 +101,10 @@ void Game::key(unsigned char key, int x, int y)
 {
 
    keystates[key] = true;
-   if (key == ' ')
+   if (key == ' '){
       Game::c_running = !Game::c_running;
+      Jukebox::StopSound();
+   }
    if (key == 'u')
       ItemHandler::getInstance().iSwitch();
    if (key == 'j')
@@ -124,7 +127,11 @@ void Game::splashScreen()
    glColor3f(0.5f,0.7f,1.0f); //sky blue backcground
    ImageLoader::rectangle(20, 20, m_width-40, m_height-40);
    */
-   
+      if(Game::c_firstLoad){
+      Jukebox::PlaySound("./sounds/Song.wav");
+      m_lastSong = glutGet(GLUT_ELAPSED_TIME);
+      c_firstLoad = false;
+   }
    
    m_splashTexture= ImageLoader::LoadTexture( "./imgs/menu.bmp" );
  
@@ -143,8 +150,9 @@ void Game::splashScreen()
 void Game::changeScreen(int dir)
 {
 
-	const char* tiles[9] =  {"./imgs/tile0.png","./imgs/tile1.png","./imgs/tile2.png","./imgs/tile3.png","./imgs/tile4.png","./imgs/tile5.png","./imgs/tile6.png","./imgs/tile7.png","./imgs/tile8.png"};
-	m_backgroundTexture= ImageLoader::LoadTexture(tiles[dir]);
+	//const char* tiles[9] =  {"./imgs/tile0.png","./imgs/tile1.png","./imgs/tile2.png","./imgs/tile3.png","./imgs/tile4.png","./imgs/tile5.png","./imgs/tile6.png","./imgs/tile7.png","./imgs/tile8.png"};
+	//m_backgroundTexture= ImageLoader::LoadTexture(tiles[dir]);
+	m_backgroundTexture = MapHandler::getInstance().getTile(dir);
 	
 
 }
@@ -152,16 +160,14 @@ void Game::changeScreen(int dir)
 
 void Game::update()
 {
-  int now;
-  int miliseconds;
-  now = glutGet(GLUT_ELAPSED_TIME);
-  
-  miliseconds =  now - m_lastSong;
-  if (miliseconds > 32600){
-     Jukebox::PlaySound("./sounds/Song.wav");
-     m_lastSong = glutGet(GLUT_ELAPSED_TIME);
-  } 
-   
+   int now;
+   int miliseconds;
+   now = glutGet(GLUT_ELAPSED_TIME);
+   miliseconds =  now - m_lastSong;
+   if (miliseconds > 32600){
+      Jukebox::PlaySound("./sounds/Song.wav");
+      m_lastSong = glutGet(GLUT_ELAPSED_TIME);
+   }   
    
    Game::getInstance().keyOperations();
    // Clear color and depth buffers
@@ -204,9 +210,10 @@ void Game::update()
    health += std::to_string(numHealth);
    
    const char* chealth = health.c_str();
-   ImageLoader::RenderString(100, m_height - 20, GLUT_BITMAP_TIMES_ROMAN_24, citem);
+   ImageLoader::RenderString(200, m_height - 20, GLUT_BITMAP_TIMES_ROMAN_24, chealth);
    
    //*****************************//
+   
    
    if(!Game::c_running)
    {
@@ -285,7 +292,8 @@ void Game::init() {
     //glutIdleFunc(Game::run);    // Wait time between frames.
 
 
-   m_backgroundTexture= ImageLoader::LoadTexture( "./imgs/tile3.png" );
+   //m_backgroundTexture= ImageLoader::LoadTexture( "./imgs/tile3.png" );
+   m_backgroundTexture = MapHandler::getInstance().getTile(3);
    m_myPlayer.init();
 
     glutMainLoop(); // glutMainLoop enters the GLUT event processing loop. 

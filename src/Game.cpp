@@ -17,6 +17,7 @@
 #include "../hdr/ImageLoader.h"
 
 bool Game::c_running = false;
+bool Game::c_firstLoad = true;
 bool* Game::keystates = new bool[256];
 
 
@@ -124,7 +125,11 @@ void Game::splashScreen()
    glColor3f(0.5f,0.7f,1.0f); //sky blue backcground
    ImageLoader::rectangle(20, 20, m_width-40, m_height-40);
    */
-   
+      if(Game::c_firstLoad){
+      Jukebox::PlaySound("./sounds/Song.wav");
+      m_lastSong = glutGet(GLUT_ELAPSED_TIME);
+      c_firstLoad = false;
+   }
    
    m_splashTexture= ImageLoader::LoadTexture( "./imgs/menu.bmp" );
  
@@ -153,16 +158,14 @@ void Game::changeScreen(int dir)
 
 void Game::update()
 {
-  int now;
-  int miliseconds;
-  now = glutGet(GLUT_ELAPSED_TIME);
-  
-  miliseconds =  now - m_lastSong;
-  if (miliseconds > 32600){
-     Jukebox::PlaySound("./sounds/Song.wav");
-     m_lastSong = glutGet(GLUT_ELAPSED_TIME);
-  } 
-   
+   int now;
+   int miliseconds;
+   now = glutGet(GLUT_ELAPSED_TIME);
+   miliseconds =  now - m_lastSong;
+   if (miliseconds > 32600){
+      Jukebox::PlaySound("./sounds/Song.wav");
+      m_lastSong = glutGet(GLUT_ELAPSED_TIME);
+   }   
    
    Game::getInstance().keyOperations();
    // Clear color and depth buffers
@@ -208,6 +211,7 @@ void Game::update()
    ImageLoader::RenderString(200, m_height - 20, GLUT_BITMAP_TIMES_ROMAN_24, chealth);
    
    //*****************************//
+   
    
    if(!Game::c_running)
    {
