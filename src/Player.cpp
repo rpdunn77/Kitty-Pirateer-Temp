@@ -40,7 +40,7 @@ void Player::left ()
    	}
    }
    m_direction = 3;
-   m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/Left.bmp" );
+   m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/CatLeftB.png" );
 }
 void Player::right ()
 {
@@ -69,7 +69,7 @@ void Player::right ()
    	}
    }
    m_direction = 1;
-   m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/Right.bmp" );
+   m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/CatRightB.png" );
 }
 void Player::up ()
 {
@@ -98,7 +98,7 @@ void Player::up ()
 		}
    }
    m_direction = 0;
-	m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/Up.bmp" );
+	m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/CatUpB.png" );
 }
 void Player::down ()
 {
@@ -127,7 +127,7 @@ void Player::down ()
   		}
    }
 	m_direction = 2;
-  	m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/Down.bmp" );
+  	m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/CatDownB.png" );
 }
 void Player::attack ()
 {
@@ -256,7 +256,7 @@ void Player::collisions(int xpos, int ypos, int width, int height, int cond,int 
 
 void Player::init()
 {
-  m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/Up.bmp" );
+  m_PlayerTexture= ImageLoader::LoadTexture( "./imgs/CatUpB.png" );
 }
 
 
@@ -271,7 +271,7 @@ Player::Player(int x, int y)
    m_direction = 2;
    m_arraypos = 0;
    m_speed = 1;
-   m_size = 30;
+   m_size = 40;
    m_stepSize = 4;
    stopright=false;
    stopleft=false;
