@@ -4,11 +4,11 @@
 
 
 
-Obstacle::Obstacle(int x, int y, int w, int h, int cond)
+Obstacle::Obstacle(int x, int y, int w, int h)
 {
    m_x = x;
    m_y = y;
    m_width = w;
    m_height = h;
-   m_cond = cond;
+   //m_cond = cond;
 }

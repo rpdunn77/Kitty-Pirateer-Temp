@@ -183,9 +183,9 @@ void Game::update()
       return splashScreen();
    }
 
-   m_myPlayer.update(m_myGameObjects3,3,4);
+   //m_myPlayer.update(m_myGameObjects3,3,4);
      
-   m_myPlayer.update(m_myGameObjects4,1,3);
+   //m_myPlayer.update(m_myGameObjects4,1,3);
    ItemHandler::getInstance().update();
    m_myPlayer.display();
 }
@@ -225,7 +225,7 @@ void Game::init() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-
+/*
     m_gameObjects = 0;                            //x   y   len  bre
     m_myGameObjects3[m_gameObjects] = new Obstacle(170, 210, 154 , 150, 0); //square
                                                     //x   y    r   circleflag  cond
@@ -236,7 +236,7 @@ void Game::init() {
     m_gameObjects = m_gameObjects+1;
     m_myGameObjects3[m_gameObjects] = new Obstacle( 650, 222, 151, 147,0);
 
-    
+ */   
 
     //gluOrtho2D(0, m_width+m_margine, 0, m_height+m_margine);
     glOrtho(0, m_width+m_margine, 0, m_height+m_margine, 0, 1000);
